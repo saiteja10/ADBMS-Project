@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<link rel="stylesheet" type="text/css" href="mystyle.css">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<style>
+body {
+  background-image: url("http://basekit-image.s3.amazonaws.com/bkpam217675_hospitalbackground1.jpg");
+  background-size: 1375px 680px;
+}
+ #ertype{
+    border: 2px solid #a1a1a1;
+    padding: 10px 10px; 
+    background: #909090 ;
+    width: 350px;
+    border-radius: 25px;
+    
+  }
+  #traumasection{
+    border: 2px solid #a1a1a1;
+    padding: 10px 10px; 
+    background: #dddddd;
+    width: 350px;
+    border-radius: 25px;
+    
+  }
+  #ersection{
+    border: 2px solid #a1a1a1;
+    padding: 10px 10px; 
+    background: #dddddd;
+    width: 350px;
+    border-radius: 25px;
+    
+  }
+</style>
+<style>
+body {
+  background-image: url("http://basekit-image.s3.amazonaws.com/bkpam217675_hospitalbackground1.jpg");
+  background-size: 1375px 680px;
+}
+ #ertype{
+    border: 2px solid #a1a1a1;
+    padding: 10px 10px; 
+    background: #909090 ;
+    width: 350px;
+    border-radius: 25px;
+    
+  }
+  #traumasection{
+    border: 2px solid #a1a1a1;
+    padding: 10px 10px; 
+    background: #dddddd;
+    width: 350px;
+    border-radius: 25px;
+    
+  }
+  #ersection{
+    border: 2px solid #a1a1a1;
+    padding: 10px 10px; 
+    background: #dddddd;
+    width: 350px;
+    border-radius: 25px;
+    
+  }
+</style>
+</head>
+	
+<body>
+	<div class="container">
+		<div>
+			<div>
+				<h3 id="ertype"> </h3>
+			</div>
+		</div>
+		<div>
+			<div class="container">
+			<div id="traumasection" class="container">
+				<h4 id="hs5"></h4>
+				<h4 id="hs6"></h4>
+				<h4 id="hs7"></h4>
+				<h4 id="hs8"></h4>
+			</div><br>
+			<div id="ersection" class="container">
+				<h4 id="hs1"></h4>
+				<h4 id="hs2"></h4>
+				<h4 id="hs3"></h4>
+				<h4 id="hs4"></h4>		
+			</div>
+				
+			</div>
+		</div>
+	</div>
+	<script>
+	document.getElementById("ertype").innerHTML ="Hospital Status&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+sessionStorage.getItem("hospitalstatus");
+	</script>
+	<script>
+		if (sessionStorage.getItem("hospitalstatus")=="ertype") 
+		{
+			document.getElementById("hs1").innerHTML ="Total ER beds&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+sessionStorage.getItem("erbeds");
+			document.getElementById("hs2").innerHTML ="ER beds free&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+sessionStorage.getItem("erbedsfree");
+			document.getElementById("hs3").innerHTML ="ER beds occupied&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+sessionStorage.getItem("erbedsoccupied");
+			document.getElementById("hs4").innerHTML ="ER beds cleanup&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+sessionStorage.getItem("erbedscleanup");
+		}
+		else
+		{
+			document.getElementById("hs1").innerHTML ="Total ER beds&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+sessionStorage.getItem("erbeds");
+			document.getElementById("hs2").innerHTML ="ER beds free&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+sessionStorage.getItem("erbedsfree");
+			document.getElementById("hs3").innerHTML ="ER beds occupied&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+sessionStorage.getItem("erbedsoccupied");
+			document.getElementById("hs4").innerHTML ="ER beds cleanup&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+sessionStorage.getItem("erbedscleanup");
+			document.getElementById("hs5").innerHTML ="Total Trauma beds&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+sessionStorage.getItem("traumabeds");
+			document.getElementById("hs6").innerHTML ="Trauma beds free&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+sessionStorage.getItem("traumabedsfree");
+			document.getElementById("hs7").innerHTML ="Trauma beds occupied&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+sessionStorage.getItem("traumabedsoccupied");
+			document.getElementById("hs8").innerHTML ="Trauma beds cleanup&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+sessionStorage.getItem("traumabedscleanup");
+		};
+		
+			
+
+	</script>
+</body>
+
+
+
+</html>

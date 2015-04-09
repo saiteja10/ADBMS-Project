@@ -1,0 +1,4 @@
+http://bootsnipp.com/snippets/featured/parallax-login-form
+http://tympanus.net/codrops/2012/03/27/login-and-registration-form-with-html5-and-css3/
+http://www.hongkiat.com/blog/html5-loginpage/
+http://www.bootstraptoggle.com/

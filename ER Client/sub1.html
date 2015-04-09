@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	
+<link rel="stylesheet" type="text/css" href="mystyle.css">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<style>
+body {
+    background-image: url("http://basekit-image.s3.amazonaws.com/bkpam217675_hospitalbackground1.jpg");
+  background-size: 1375px 680px;
+}
+</style>
+
+<script>
+
+$(document).ready(function(){
+
+    $("#butt").click(function(){
+        $.get("http://107.188.249.238:8080/er-rest-1.0/login?hospitalid="+document.getElementById("hospid").value+"&pass="+document.getElementById("pwd").value, function(data, status){
+
+        	$.get("http://107.188.249.238:8080/er-rest-1.0/hospital?hospitalid="+document.getElementById("hospid").value, function(data1, status1){
+        		        $.get("http://107.188.249.238:8080/er-rest-1.0/ambulance?ambulanceid=1000", function(data9, status){
+				          $.get("http://107.188.249.238:8080/er-rest-1.0/ambulance?ambulanceid=1001", function(data2, status){
+				            $.get("http://107.188.249.238:8080/er-rest-1.0/ambulance?ambulanceid=2000", function(data3, status){
+				              $.get("http://107.188.249.238:8080/er-rest-1.0/ambulance?ambulanceid=2001", function(data4, status){
+				                $.get("http://107.188.249.238:8080/er-rest-1.0/ambulance?ambulanceid=2002", function(data5, status){
+				                  $.get("http://107.188.249.238:8080/er-rest-1.0/ambulance?ambulanceid=2003", function(data6, status){
+				                    $.get("http://107.188.249.238:8080/er-rest-1.0/ambulance?ambulanceid=2004", function(data7, status){
+				                      $.get("http://107.188.249.238:8080/er-rest-1.0/ambulance?ambulanceid=2005", function(data8, status){
+        		//alert(data1.hospitalName);
+        		//alert(data1.hospitalString);
+        		sessionStorage.setItem("hospitalname", data1.hospitalName);
+        		sessionStorage.setItem("hospitaladdress", data1.address);
+
+        		sessionStorage.setItem("traumabeds", data1.traumaBeds);
+        		sessionStorage.setItem("traumabedsfree", data1.traumaBedsFree);
+        		sessionStorage.setItem("traumabedsoccupied", data1.traumaBedsOccupied);
+        		sessionStorage.setItem("traumabedscleanup", data1.traumaBedsCleanup);
+        		sessionStorage.setItem("erbeds", data1.erBeds);
+        		sessionStorage.setItem("erbedsfree", data1.erBedsFree);
+        		sessionStorage.setItem("erbedsoccupied", data1.erBedsOccupied);
+        		sessionStorage.setItem("erbedscleanup", data1.erBedsCleanup);
+	        	sessionStorage.setItem("username", document.getElementById("uname").value);
+    	    	sessionStorage.setItem("hospitalid", document.getElementById("hospid").value);
+    	    	sessionStorage.setItem("erdivert1",data1.erDivert);
+    	    	sessionStorage.setItem("traumadivert1",data1.traumaDivert);
+    	    	sessionStorage.setItem("burndivert1",data1.burnDivert);
+    	    	sessionStorage.setItem("stemidivert1",data1.stemiDivert);
+    	    	sessionStorage.setItem("strokedivert1",data1.strokeDivert);
+// alert(sessionStorage.getItem("hospitalname"));
+
+    	    	
+    	    	var levelofcareString=data1.levelOfCare[0];
+
+    	    	for (var i = 1; i < (data1.levelOfCare).length; i++) {
+    	    		levelofcareString=levelofcareString+","+data1.levelOfCare[i];
+    	    	};
+    	    	        		sessionStorage.setItem("hospitalstatus", levelofcareString);
+
+
+    	    sessionStorage.setItem("AmbId1", data9.ambulanceID);
+            sessionStorage.setItem("AmbLat1", data9.ambLat);
+            sessionStorage.setItem("AmbLon1", data9.ambLon);
+            sessionStorage.setItem("EstTA1", data9.eta);
+            sessionStorage.setItem("PtnAge1", data9.patientAge);
+            sessionStorage.setItem("PtnCtg1", data9.patientCategory);
+            sessionStorage.setItem("TrgHsp1", data9.targetHospital);
+            
+
+            sessionStorage.setItem("AmbId2", data2.ambulanceID);
+            sessionStorage.setItem("AmbLat2", data2.ambLat);
+            sessionStorage.setItem("AmbLon2", data2.ambLon);
+            sessionStorage.setItem("EstTA2", data2.eta);
+            sessionStorage.setItem("PtnAge2", data2.patientAge);
+            sessionStorage.setItem("PtnCtg2", data2.patientCategory);
+            sessionStorage.setItem("TrgHsp2", data2.targetHospital);
+        
+
+
+            sessionStorage.setItem("AmbId3", data3.ambulanceID);
+            sessionStorage.setItem("AmbLat3", data3.ambLat);
+            sessionStorage.setItem("AmbLon3", data3.ambLon);
+            sessionStorage.setItem("EstTA3", data3.eta);
+            sessionStorage.setItem("PtnAge3", data3.patientAge);
+            sessionStorage.setItem("PtnCtg3", data3.patientCategory);
+            sessionStorage.setItem("TrgHsp3", data3.targetHospital);
+          
+
+
+            sessionStorage.setItem("AmbId4", data4.ambulanceID);
+            sessionStorage.setItem("AmbLat4", data4.ambLat);
+            sessionStorage.setItem("AmbLon4", data4.ambLon);
+            sessionStorage.setItem("EstTA4", data4.eta);
+            sessionStorage.setItem("PtnAge4", data4.patientAge);
+            sessionStorage.setItem("PtnCtg4", data4.patientCategory);
+            sessionStorage.setItem("TrgHsp4", data4.targetHospital);
+            
+
+
+            sessionStorage.setItem("AmbId5", data5.ambulanceID);
+            sessionStorage.setItem("AmbLat5", data5.ambLat);
+            sessionStorage.setItem("AmbLon5", data5.ambLon);
+            sessionStorage.setItem("EstTA5", data5.eta);
+            sessionStorage.setItem("PtnAge5", data5.patientAge);
+            sessionStorage.setItem("PtnCtg5", data5.patientCategory);
+            sessionStorage.setItem("TrgHsp5", data5.targetHospital);
+          
+
+
+            sessionStorage.setItem("AmbId6", data6.ambulanceID);
+            sessionStorage.setItem("AmbLat6", data6.ambLat);
+            sessionStorage.setItem("AmbLon6", data6.ambLon);
+            sessionStorage.setItem("EstTA6", data6.eta);
+            sessionStorage.setItem("PtnAge6", data6.patientAge);
+            sessionStorage.setItem("PtnCtg6", data6.patientCategory);
+            sessionStorage.setItem("TrgHsp6", data6.targetHospital);
+        
+
+
+            sessionStorage.setItem("AmbId7", data7.ambulanceID);
+            sessionStorage.setItem("AmbLat7", data7.ambLat);
+            sessionStorage.setItem("AmbLon7", data7.ambLon);
+            sessionStorage.setItem("EstTA7", data7.eta);
+            sessionStorage.setItem("PtnAge7", data7.patientAge);
+            sessionStorage.setItem("PtnCtg7", data7.patientCategory);
+            sessionStorage.setItem("TrgHsp7", data7.targetHospital);
+       
+
+
+
+            sessionStorage.setItem("AmbId8", data8.ambulanceID);
+            sessionStorage.setItem("AmbLat8", data8.ambLat);
+            sessionStorage.setItem("AmbLon8", data8.ambLon);
+            sessionStorage.setItem("EstTA8", data8.eta);
+            sessionStorage.setItem("PtnAge8", data8.patientAge);
+            sessionStorage.setItem("PtnCtg8", data8.patientCategory);
+            sessionStorage.setItem("TrgHsp8", data8.targetHospital);
+
+		if(data.messageType=="Login Successful")
+           {alert( data.messageType);
+        	 window.location.href = "9.html";} 
+        if(data.errorType=="Login Unsuccessful")
+        	{
+        		document.getElementById("inccpwd").innerHTML = data.errorType;
+        	 } 
+        	 								});
+										});
+									});
+								});
+							});
+						});
+					});
+				});
+			});
+        });
+    });
+});
+</script>
+
+
+  </head>
+
+  <body>
+
+<div class="container" style="padding-top: 130px;">
+    <div class="row vertical-offset-100">
+    	<div class="col-md-4 col-md-offset-4">
+    		<div class="panel panel-default">
+			  	<div class="panel-heading">
+			    	<h3 class="panel-title">Please sign in</h3>
+			 	</div>
+			  	<div class="panel-body">
+			    	
+                    <fieldset>
+					<div class="form-group">
+			    		    <input class="form-control" placeholder="Hospital Id" name="hospital id" id="hospid" type="text" required>
+			    		</div>
+			    	  	<div class="form-group">
+			    		    <input class="form-control" placeholder="UserName" name="username" id="uname" type="text">
+			    		    <script>
+	
+</script>
+			    		</div>
+
+			    		<div class="form-group">
+			    			<input class="form-control" placeholder="Password" name="password" id="pwd" type="password" value="" required>
+			    		</div>
+			    		<div class="checkbox">
+			    	    	<label>
+			    	    		<input name="remember" type="checkbox" value="Remember Me"> Remember Me
+			    	    	</label>
+			    	    </div>
+			    		
+					<button class="btn btn-lg btn-success btn-block" id="butt" value="Login">Login</button> 
+					<div style="padding-top: 10px;" align="center">
+					<p class="change_link">
+					Not a member yet ?
+					<a href="signup.html" class="btn btn-xs btn-success">Join us</a>
+					</p>
+				    </div>
+				    <p id=inccpwd></p>
+			    	</fieldset>
+
+			   
+			    </div>
+			</div>
+		</div>
+	</div>
+</div>
+  </body>
+
+</html>

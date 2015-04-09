@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.0/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.0/js/bootstrap-toggle.min.js"></script>
+    <script src="sockjs-0.3.js"></script>
+    <script src="stomp.js"></script>
+  <style>
+    body {
+    background-image: url("http://basekit-image.s3.amazonaws.com/bkpam217675_hospitalbackground1.jpg");
+    background-size: 1375px 968px;
+    }
+  </style>
+<style> 
+  #stretch {
+   
+    border-image: url(http://www.goodfightmusic.com/images/flash_border.png) 30 30 stretch;
+  }
+ #hospname{
+    border: 2px solid #a1a1a1;
+    padding: 0px 0px; 
+    background: #dddddd;
+    width: 700px;
+    border-radius: 25px;
+    font-family: myFirstFont;
+  }
+/*  #ertype1 {
+    text-shadow: 5px 5px 5px #FF0000;
+  }*/
+
+  @font-face {
+   font-family: myFirstFont;
+   src: url(sansation_light.woff);
+  }
+#welc{
+    text-shadow: 5px 5px 5px #00FF99;
+    font-family: myFirstFont;
+  }
+
+ #ertype{
+    border: 2px solid #a1a1a1;
+    padding: 10px 10px; 
+    background: #C0C0C0  ;
+    width: 280px;
+    border-radius: 25px;
+    text-align: center;;
+    
+  }
+
+   #inboundstatus{
+    border: 2px solid #a1a1a1;
+    padding: 10px 10px; 
+    background: #C0C0C0  ;
+    width: 315px;
+    border-radius: 25px;
+    
+  }
+  #traumasection{
+    border: 2px solid #a1a1a1;
+    padding: 10px 10px; 
+    background: #909090;
+    width: 310px;
+    border-radius: 25px;
+    
+  }
+    #serviceavailability{
+    border: 2px solid #a1a1a1;
+    padding: 10px 10px; 
+    background: #C0C0C0  ;
+    width: 315px;
+    border-radius: 25px;
+    
+  }
+  #availabilityservice{
+    border: 2px solid #a1a1a1;
+    padding: 10px 10px; 
+    background: #909090;
+    width: 310px;
+    border-radius: 25px;
+    
+  }
+  #ersection{
+    border: 2px solid #a1a1a1;
+    padding: 10px 10px; 
+    background: #909090;
+    width: 310px;
+    border-radius: 25px;
+    
+  }
+  #ambtab{
+    border: 2px solid #a1a1a1;
+    padding: 10px 10px; 
+    background: #dddddd;
+    width: 650px;
+    border-radius: 25px;
+    
+  }
+   #m2,#m3,#m4,#m6,#m7,#m8,#erdivert,#traumadivert,#severeburnsdivert,#stemidivert,#strokedivert{
+    border: 2px solid #a1a1a1;
+    padding: 10px 10px; 
+    background: #dddddd ;
+    width: 290px;
+    border-radius: 25px;
+  }
+    #m1,#m5{
+    border: 2px solid #a1a1a1;
+    padding: 10px 10px; 
+    background: #C0C0C0 ;
+    width: 290px;
+    border-radius: 25px;
+  }
+  
+  
+</style>
+
+
+       <script>
+    
+                                    
+
+$(document).ready(function(){
+
+    $("#butt2").click(function(){
+        $.get("http://107.188.249.238:8080/er-rest-1.0/ambulance?ambulanceid=1000", function(data1, status){
+          $.get("http://107.188.249.238:8080/er-rest-1.0/ambulance?ambulanceid=1001", function(data2, status){
+            $.get("http://107.188.249.238:8080/er-rest-1.0/ambulance?ambulanceid=2000", function(data3, status){
+              $.get("http://107.188.249.238:8080/er-rest-1.0/ambulance?ambulanceid=2001", function(data4, status){
+                $.get("http://107.188.249.238:8080/er-rest-1.0/ambulance?ambulanceid=2002", function(data5, status){
+                  $.get("http://107.188.249.238:8080/er-rest-1.0/ambulance?ambulanceid=2003", function(data6, status){
+                    $.get("http://107.188.249.238:8080/er-rest-1.0/ambulance?ambulanceid=2004", function(data7, status){
+                      $.get("http://107.188.249.238:8080/er-rest-1.0/ambulance?ambulanceid=2005", function(data8, status){4
+
+                        if ((parseInt(sessionStorage.getItem("erbedsfree"))+parseInt(sessionStorage.getItem("erbedsoccupied"))+parseInt(sessionStorage.getItem("erbedscleanup"))!=sessionStorage.getItem("erbeds")) || (parseInt(sessionStorage.getItem("traumabedsfree"))+parseInt(sessionStorage.getItem("traumabedsoccupied"))+parseInt(sessionStorage.getItem("traumabedscleanup"))!=(sessionStorage.getItem("traumabeds"))))
+                         {
+                          alert("Updated rooms total doesn't match the available rooms total. Please check again and update later ");
+                          window.location.href = "5.html";
+
+                          };
+
+
+                        var dataObject = {
+                                    "traumaBeds": sessionStorage.getItem("traumabeds"),
+                                    "traumaBedsFree": sessionStorage.getItem("traumabedsfree"),
+                                    "traumaBedsOccupied": sessionStorage.getItem("traumabedsoccupied"),
+                                    "traumaBedsCleanup": sessionStorage.getItem("traumabedscleanup"),
+                                    "erBeds": sessionStorage.getItem("erbeds"),
+                                    "erBedsFree": sessionStorage.getItem("erbedsfree"),
+                                    "erBedsOccupied": sessionStorage.getItem("erbedsoccupied"),
+                                    "erBedsCleanup": sessionStorage.getItem("erbedscleanup"),
+                                    "erDivert": sessionStorage.getItem("erdivert1"),
+                                    "traumaDivert": sessionStorage.getItem("traumadivert1"),
+                                    "burnDivert": sessionStorage.getItem("burndivert1"),
+                                    "stemiDivert": sessionStorage.getItem("stemidivert1"),
+                                    "strokeDivert": sessionStorage.getItem("strokedivert1")
+                                    };
+                        $.ajax({
+                                            url: "http://107.188.249.238:8080/er-rest-1.0/hospital?hospitalid="+sessionStorage.getItem("hospitalid"),
+                                            type: "PUT",    
+                                            contentType: "application/json",
+                                            data: JSON.stringify(dataObject),
+                                            success: function(result) {
+                                                          sessionStorage.setItem("AmbId1", data1.ambulanceID);
+                                                          sessionStorage.setItem("AmbLat1", data1.ambLat);
+                                                          sessionStorage.setItem("AmbLon1", data1.ambLon);
+                                                          sessionStorage.setItem("EstTA1", data1.eta);
+                                                          sessionStorage.setItem("PtnAge1", data1.patientAge);
+                                                          sessionStorage.setItem("PtnCtg1", data1.patientCategory);
+                                                          sessionStorage.setItem("TrgHsp1", data1.targetHospital);
+
+                                                          sessionStorage.setItem("AmbId2", data2.ambulanceID);
+                                                          sessionStorage.setItem("AmbLat2", data2.ambLat);
+                                                          sessionStorage.setItem("AmbLon2", data2.ambLon);
+                                                          sessionStorage.setItem("EstTA2", data2.eta);
+                                                          sessionStorage.setItem("PtnAge2", data2.patientAge);
+                                                          sessionStorage.setItem("PtnCtg2", data2.patientCategory);
+                                                          sessionStorage.setItem("TrgHsp2", data2.targetHospital);
+
+
+                                                          sessionStorage.setItem("AmbId3", data3.ambulanceID);
+                                                          sessionStorage.setItem("AmbLat3", data3.ambLat);
+                                                          sessionStorage.setItem("AmbLon3", data3.ambLon);
+                                                          sessionStorage.setItem("EstTA3", data3.eta);
+                                                          sessionStorage.setItem("PtnAge3", data3.patientAge);
+                                                          sessionStorage.setItem("PtnCtg3", data3.patientCategory);
+                                                          sessionStorage.setItem("TrgHsp3", data3.targetHospital);
+
+
+                                                          sessionStorage.setItem("AmbId4", data4.ambulanceID);
+                                                          sessionStorage.setItem("AmbLat4", data4.ambLat);
+                                                          sessionStorage.setItem("AmbLon4", data4.ambLon);
+                                                          sessionStorage.setItem("EstTA4", data4.eta);
+                                                          sessionStorage.setItem("PtnAge4", data4.patientAge);
+                                                          sessionStorage.setItem("PtnCtg4", data4.patientCategory);
+                                                          sessionStorage.setItem("TrgHsp4", data4.targetHospital);
+
+
+                                                          sessionStorage.setItem("AmbId5", data5.ambulanceID);
+                                                          sessionStorage.setItem("AmbLat5", data5.ambLat);
+                                                          sessionStorage.setItem("AmbLon5", data5.ambLon);
+                                                          sessionStorage.setItem("EstTA5", data5.eta);
+                                                          sessionStorage.setItem("PtnAge5", data5.patientAge);
+                                                          sessionStorage.setItem("PtnCtg5", data5.patientCategory);
+                                                          sessionStorage.setItem("TrgHsp5", data5.targetHospital);
+
+
+                                                          sessionStorage.setItem("AmbId6", data6.ambulanceID);
+                                                          sessionStorage.setItem("AmbLat6", data6.ambLat);
+                                                          sessionStorage.setItem("AmbLon6", data6.ambLon);
+                                                          sessionStorage.setItem("EstTA6", data6.eta);
+                                                          sessionStorage.setItem("PtnAge6", data6.patientAge);
+                                                          sessionStorage.setItem("PtnCtg6", data6.patientCategory);
+                                                          sessionStorage.setItem("TrgHsp6", data6.targetHospital);
+
+
+                                                          sessionStorage.setItem("AmbId7", data7.ambulanceID);
+                                                          sessionStorage.setItem("AmbLat7", data7.ambLat);
+                                                          sessionStorage.setItem("AmbLon7", data7.ambLon);
+                                                          sessionStorage.setItem("EstTA7", data7.eta);
+                                                          sessionStorage.setItem("PtnAge7", data7.patientAge);
+                                                          sessionStorage.setItem("PtnCtg7", data7.patientCategory);
+                                                          sessionStorage.setItem("TrgHsp7", data7.targetHospital);
+
+
+
+                                                          sessionStorage.setItem("AmbId8", data8.ambulanceID);
+                                                          sessionStorage.setItem("AmbLat8", data8.ambLat);
+                                                          sessionStorage.setItem("AmbLon8", data8.ambLon);
+                                                          sessionStorage.setItem("EstTA8", data8.eta);
+                                                          sessionStorage.setItem("PtnAge8", data8.patientAge);
+                                                          sessionStorage.setItem("PtnCtg8", data8.patientCategory);
+                                                          sessionStorage.setItem("TrgHsp8", data8.targetHospital);
+
+                                                          alert("Updated successfully");
+
+                                                         window.location.href = "5.html";
+                                                
+                                            }
+                                        });
+
+                      });
+                    });
+                  });
+                });
+              });
+            });
+          });
+        });
+      });
+    });
+
+    </script>
+
+  </head>
+
+<body>
+
+
+
+ <div class="container">
+
+      <div  id="stretch">
+        <h1 align="center" id="hospname"></h1>
+        <h3 id="welc"></h3>
+       <h2 align="center" id="ertype1" class="text-danger"></h2>  
+      </div>
+
+        <script>
+        document.getElementById("welc").innerHTML = "&nbsp;&nbsp;&nbsp;"+"Welcome "+sessionStorage.getItem("username")+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+sessionStorage.getItem("hospitaladdress");
+        document.getElementById("hospname").innerHTML =sessionStorage.getItem("hospitalname");
+        </script>
+        
+
+        <div class="container-fluid">
+
+        <div class="row">
+          
+          <div class="col-sm-3 col-md-6 col-lg-4">
+                                        <div class="container">
+
+                                           
+                                              <div>
+                                               <h3 id="ertype">Room status</h3>
+                                               </div>
+                                           
+
+                                           
+                                           <div class="container">
+
+                                               <div id="ersection">
+                                                 <div id="m1">
+                                                 <h4 id="hs1"></h4>
+                                                 </div>
+
+                                                 
+
+                                                 <div id="m2">
+                                                 <h4 id="hs2"></h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                 <img src="down.png" height="22" width="22" onclick="clickCounter2()" type="button">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                 <img src="up.png" height="22" width="22" onclick="clickCounter1()" type="button">
+                                                 </div>
+                                                 <script>
+
+                                                 function clickCounter1() {
+                                                  sessionStorage.setItem("erbedsfree",parseInt(sessionStorage.getItem("erbedsfree"))+1)
+                                                  
+                                                  document.getElementById("hs2").innerHTML = "ER beds free&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+sessionStorage.getItem("erbedsfree");
+                                                  // alert(sessionStorage.getItem("erbedsfree"));
+                                                 }
+
+                                                 function clickCounter2() {
+                                                  sessionStorage.setItem("erbedsfree",parseInt(sessionStorage.getItem("erbedsfree"))-1)
+                                                  
+                                                  document.getElementById("hs2").innerHTML = "ER beds free&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+sessionStorage.getItem("erbedsfree");
+                                                  // alert(sessionStorage.getItem("erbedsfree"));
+                                                 }
+
+                                                 </script>
+
+                                                 <div id="m3">
+                                                 <h4 id="hs3"></h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                 <img src="down.png" height="22" width="22" onclick="clickCounter4()" type="button">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                 <img src="up.png" height="22" width="22" onclick="clickCounter3()" type="button">
+                                                 </div>
+
+                                                 <script>
+
+                                                 function clickCounter3() {
+                                                  sessionStorage.setItem("erbedsoccupied",parseInt(sessionStorage.getItem("erbedsoccupied"))+1)
+                                                  
+                                                  document.getElementById("hs3").innerHTML = "ER beds occupied&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+sessionStorage.getItem("erbedsoccupied");
+                                                  // alert(sessionStorage.getItem("erbedsfree"));
+                                                 }
+
+                                                 function clickCounter4() {
+                                                  sessionStorage.setItem("erbedsoccupied",parseInt(sessionStorage.getItem("erbedsoccupied"))-1)
+                                                  
+                                                  document.getElementById("hs3").innerHTML = "ER beds occupied&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+sessionStorage.getItem("erbedsoccupied");
+                                                  // alert(sessionStorage.getItem("erbedsfree"));
+                                                 }
+
+                                                 </script>
+
+
+
+                                                 <div id="m4">
+                                                 <h4 id="hs4"></h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                 <img src="down.png" height="22" width="22" onclick="clickCounter6()" type="button">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                 <img src="up.png" height="22" width="22" onclick="clickCounter5()" type="button">
+                                                 </div>  
+                                               </div>
+
+                                               <script>
+
+                                                 function clickCounter5() {
+                                                  sessionStorage.setItem("erbedscleanup",parseInt(sessionStorage.getItem("erbedscleanup"))+1)
+                                                  
+                                                  document.getElementById("hs4").innerHTML = "ER beds cleanup&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+sessionStorage.getItem("erbedscleanup");
+                            
+                                                  // alert(sessionStorage.getItem("erbedsfree"));
+                                                 }
+
+                                                 function clickCounter6() {
+                                                  sessionStorage.setItem("erbedscleanup",parseInt(sessionStorage.getItem("erbedscleanup"))-1)
+                                                  
+                                                  document.getElementById("hs4").innerHTML =  "ER beds cleanup&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+sessionStorage.getItem("erbedscleanup");
+                                                  // alert(sessionStorage.getItem("erbedsfree"));
+                                                 }
+
+                                                 </script>
+
+
+                                           <br>
+                                                 <div id="traumasection">
+
+                                                 <div id="m5">
+                                                 <h4 id="hs5"></h4>
+                                                 </div>
+
+                                                 
+
+                                                 <div id="m6">
+                                                 <h4 id="hs6"></h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                 <img src="down.png" height="22" width="22" onclick="clickCounter8()" type="button">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                 <img src="up.png" height="22" width="22" onclick="clickCounter7()" type="button">
+                                                 </div>
+
+                                                 <script>
+
+                                                 function clickCounter7() {
+                                                  sessionStorage.setItem("traumabedsfree",parseInt(sessionStorage.getItem("traumabedsfree"))+1)
+                                                  
+                                                  document.getElementById("hs6").innerHTML = "Trauma beds free&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+sessionStorage.getItem("traumabedsfree");
+                                                  // alert(sessionStorage.getItem("erbedsfree"));
+                                                 }
+
+                                                 function clickCounter8() {
+                                                  sessionStorage.setItem("traumabedsfree",parseInt(sessionStorage.getItem("traumabedsfree"))-1)
+                                                  
+                                                  document.getElementById("hs6").innerHTML = "Trauma beds free&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+sessionStorage.getItem("traumabedsfree");
+                                                  // alert(sessionStorage.getItem("erbedsfree"));
+                                                 }
+
+                                                 </script>
+
+                                                 <div id="m7">
+                                                 <h4 id="hs7"></h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                 <img src="down.png" height="22" width="22" onclick="clickCounter10()" type="button">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                 <img src="up.png" height="22" width="22" onclick="clickCounter9()" type="button">
+                                                 </div>
+
+                                                 <script>
+
+                                                 function clickCounter9() {
+                                                  sessionStorage.setItem("traumabedsoccupied",parseInt(sessionStorage.getItem("traumabedsoccupied"))+1)
+                                                  
+                                                  document.getElementById("hs7").innerHTML = "Trauma beds occupied&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+sessionStorage.getItem("traumabedsoccupied");
+                                                  // alert(sessionStorage.getItem("erbedsfree"));
+                                                 }
+
+                                                 function clickCounter10() {
+                                                  sessionStorage.setItem("traumabedsoccupied",parseInt(sessionStorage.getItem("traumabedsoccupied"))-1)
+                                                  
+                                                  document.getElementById("hs7").innerHTML = "Trauma beds occupied&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+sessionStorage.getItem("traumabedsoccupied");
+                                                  // alert(sessionStorage.getItem("erbedsfree"));
+                                                 }
+
+                                                 </script>
+
+                                                 <div id="m8">
+                                                 <h4 id="hs8"></h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                 <img src="down.png" height="22" width="22" onclick="clickCounter12()" type="button">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                 <img src="up.png" height="22" width="22" onclick="clickCounter11()" type="button">
+                                                 </div>       
+
+                                                 <script>
+
+                                                 function clickCounter11() {
+                                                  sessionStorage.setItem("traumabedscleanup",parseInt(sessionStorage.getItem("traumabedscleanup"))+1)
+                                                  
+                                                  document.getElementById("hs8").innerHTML = "Trauma beds cleanup&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+sessionStorage.getItem("traumabedscleanup");
+                                                  // alert(sessionStorage.getItem("erbedsfree"));
+                                                 }
+
+                                                 function clickCounter12() {
+                                                  sessionStorage.setItem("traumabedscleanup",parseInt(sessionStorage.getItem("traumabedscleanup"))-1)
+                                                  
+                                                  document.getElementById("hs8").innerHTML = "Trauma beds cleanup&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+sessionStorage.getItem("traumabedscleanup");
+                                                  // alert(sessionStorage.getItem("erbedsfree"));
+                                                 }
+
+                                                 </script>                                          
+
+                                                 
+                                                 
+                                                 </div>
+                                             <!--     <br> -->
+
+                                               <!--   <div>
+                                                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                  <button class="btn btn-sm btn-success" id="butt3">Update</button>
+                                                </div>
+ -->
+
+
+                                           </div>
+                                        </div>
+
+                                  <script>
+                                    document.getElementById("ertype1").innerHTML ="Services&nbsp;&nbsp;&nbsp;&nbsp;"+sessionStorage.getItem("hospitalstatus");
+                                  </script>
+
+                                  <script>
+                                      if (sessionStorage.getItem("traumabeds")==0) 
+                                      {
+                                        document.getElementById("hs1").innerHTML ="Total ER beds&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+sessionStorage.getItem("erbeds");
+                                        document.getElementById("hs2").innerHTML ="ER beds free&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+sessionStorage.getItem("erbedsfree");
+                                        document.getElementById("hs3").innerHTML ="ER beds occupied&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+sessionStorage.getItem("erbedsoccupied");
+                                        document.getElementById("hs4").innerHTML ="ER beds cleanup&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+sessionStorage.getItem("erbedscleanup");
+                                         document.getElementById("traumasection").style.visibility = "hidden";
+                                      }
+                                      else
+                                      {
+                                        document.getElementById("hs1").innerHTML ="Total ER beds&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+sessionStorage.getItem("erbeds");
+                                        document.getElementById("hs2").innerHTML ="ER beds free&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+sessionStorage.getItem("erbedsfree");
+                                        document.getElementById("hs3").innerHTML ="ER beds occupied&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+sessionStorage.getItem("erbedsoccupied");
+                                        document.getElementById("hs4").innerHTML ="ER beds cleanup&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+sessionStorage.getItem("erbedscleanup");
+                                        document.getElementById("hs5").innerHTML ="Total Trauma beds&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+sessionStorage.getItem("traumabeds");
+                                        document.getElementById("hs6").innerHTML ="Trauma beds free&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+sessionStorage.getItem("traumabedsfree");
+                                        document.getElementById("hs7").innerHTML ="Trauma beds occupied&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+sessionStorage.getItem("traumabedsoccupied");
+                                        document.getElementById("hs8").innerHTML ="Trauma beds cleanup&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+sessionStorage.getItem("traumabedscleanup");
+                                      };  
+                                   </script>
+
+          </div>
+
+          <div class="col-sm-9 col-md-6 col-lg-8">
+
+                  <div class="container">
+
+                    <h3 id="inboundstatus" align="center">Inbound Ambulances</h3> 
+
+                                      <div class="container">
+
+                                      <div id="ambtab">                                       
+                                       <table class="table table-hover">
+                                         <thead>
+                                           <tr>
+                                             <th>Id</th>
+                                             <th>Latitude</th>
+                                             <th>Longitude</th>
+                                             <th>ETA</th>
+                                             <th>Patient Age</th>
+                                             <th>Patient Category</th>
+                                             <th></th>
+                                           </tr>
+                                         </thead>
+                                         <tbody>
+                                           <tr id="tr1">
+                                             <td id="tr1td1"></td>
+                                             <td id="tr1td2"></td>
+                                             <td id="tr1td3"></td>
+                                             <td id="tr1td4"></td>
+                                             <td id="tr1td5"></td>
+                                             <td id="tr1td6"></td>
+                                             <td id="tr1td7"><button id="button1" onclick="senddiv1()">Reroute</button></td>
+                                           </tr>
+                                           <tr id="tr2">
+                                             <td id="tr2td1"></td>
+                                             <td id="tr2td2"></td>
+                                             <td id="tr2td3"></td>
+                                             <td id="tr2td4"></td>
+                                             <td id="tr2td5"></td>
+                                             <td id="tr2td6"></td>
+                                             <td id="tr2td7"><button id="button2" onclick="senddiv2()">Reroute</button></td>
+                                           </tr>
+                                           <tr id="tr3">
+                                             <td id="tr3td1"></td>
+                                             <td id="tr3td2"></td>
+                                             <td id="tr3td3"></td>
+                                             <td id="tr3td4"></td>
+                                             <td id="tr3td5"></td>
+                                             <td id="tr3td6"></td>
+                                             <td id="tr3td7"><button id="button3" onclick="senddiv3()">Reroute</button></td>
+                                           </tr>
+                                           <tr id="tr4">
+                                             <td id="tr4td1"></td>
+                                             <td id="tr4td2"></td>
+                                             <td id="tr4td3"></td>
+                                             <td id="tr4td4"></td>
+                                             <td id="tr4td5"></td>
+                                             <td id="tr4td6"></td>
+                                             <td id="tr4td7"><button id="button4" onclick="senddiv4()">Reroute</button></td>
+                                           </tr>
+                                           <tr id="tr5">
+                                             <td id="tr5td1"></td>
+                                             <td id="tr5td2"></td>
+                                             <td id="tr5td3"></td>
+                                             <td id="tr5td4"></td>
+                                             <td id="tr5td5"></td>
+                                             <td id="tr5td6"></td>
+                                             <td id="tr5td7"><button id="button5" onclick="senddiv5()">Reroute</button></td>
+                                           </tr>
+
+                                         </tbody>
+                                       </table>
+
+
+                                       </div>
+
+                                       </div>
+
+
+                                <script>
+                                 var count=0;
+                                var k=1;
+                                for (var i = 1; i <= 8; i++) {
+                                  
+                                if(sessionStorage.getItem("TrgHsp"+i)==sessionStorage.getItem("hospitalid") && sessionStorage.getItem("hospitalid")!= null)
+                                  {
+                                    count = count + 1;
+                                    sessionStorage.setItem("a"+k,sessionStorage.getItem("AmbId"+i) );
+                                    sessionStorage.setItem("b"+k,sessionStorage.getItem("AmbLat"+i) );
+                                    sessionStorage.setItem("c"+k,sessionStorage.getItem("AmbLon"+i) );
+                                    sessionStorage.setItem("d"+k,sessionStorage.getItem("EstTA"+i) );
+                                    sessionStorage.setItem("e"+k,sessionStorage.getItem("PtnAge"+i) );
+                                    sessionStorage.setItem("f"+k,sessionStorage.getItem("PtnCtg"+i) );
+                                    
+                                    k=k+1;
+
+
+                                  };
+ 
+                                };
+                                if (count==1) 
+                                  {
+                                    alert(count+" Inbound Ambulances");
+                                    window.location.href = "1.html";
+                                  };
+                                  if (count==2) 
+                                  {
+                                   alert(count+" Inbound Ambulances");
+                                    window.location.href = "2.html";
+                                  };
+                                  if (count==3) 
+                                  {
+                                    alert(count+" Inbound Ambulances");
+                                    window.location.href = "3.html";
+                                  };
+                                  if (count==4) 
+                                  {
+                                    alert(count+" Inbound Ambulances");
+                                    window.location.href = "4.html";
+                                  };
+                                  if (count==0) 
+                                  {
+                                    alert(count+" Inbound Ambulances");
+                                    window.location.href = "9.html";
+                                  };
+                                  if (count==6) 
+                                  {
+                                    alert(count+" Inbound Ambulances");
+                                    window.location.href = "6.html";
+                                  };
+                                  if (count==7) 
+                                  {
+                                    alert(count+" Inbound Ambulances");
+                                    window.location.href = "7.html";
+                                  };
+                                  if (count==8) 
+                                  {
+                                    alert(count+" Inbound Ambulances");
+                                    window.location.href = "8.html";
+                                  };
+
+                                document.getElementById("tr1td1").innerHTML=sessionStorage.getItem("a1");
+                                document.getElementById("tr1td2").innerHTML=sessionStorage.getItem("b1");
+                                document.getElementById("tr1td3").innerHTML=sessionStorage.getItem("c1");
+                                document.getElementById("tr1td4").innerHTML=sessionStorage.getItem("d1");
+                                document.getElementById("tr1td5").innerHTML=sessionStorage.getItem("e1");
+                                document.getElementById("tr1td6").innerHTML=sessionStorage.getItem("f1");
+                                // document.getElementById("tr1td7").innerHTML="<button>Reroute</button>";
+                             
+
+                                document.getElementById("tr2td1").innerHTML=sessionStorage.getItem("a2");
+                                document.getElementById("tr2td2").innerHTML=sessionStorage.getItem("b2");
+                                document.getElementById("tr2td3").innerHTML=sessionStorage.getItem("c2");
+                                document.getElementById("tr2td4").innerHTML=sessionStorage.getItem("d2");
+                                document.getElementById("tr2td5").innerHTML=sessionStorage.getItem("e2");
+                                document.getElementById("tr2td6").innerHTML=sessionStorage.getItem("f2");
+                                // document.getElementById("tr2td7").innerHTML="<button>Reroute</button>";
+                            
+                                document.getElementById("tr3td1").innerHTML=sessionStorage.getItem("a3");
+                                document.getElementById("tr3td2").innerHTML=sessionStorage.getItem("b3");
+                                document.getElementById("tr3td3").innerHTML=sessionStorage.getItem("c3");
+                                document.getElementById("tr3td4").innerHTML=sessionStorage.getItem("d3");
+                                document.getElementById("tr3td5").innerHTML=sessionStorage.getItem("e3");
+                                document.getElementById("tr3td6").innerHTML=sessionStorage.getItem("f3");
+                                // document.getElementById("tr3td7").innerHTML="<button>Reroute</button>";
+
+                             
+                                document.getElementById("tr4td1").innerHTML=sessionStorage.getItem("a4");
+                                document.getElementById("tr4td2").innerHTML=sessionStorage.getItem("b4");
+                                document.getElementById("tr4td3").innerHTML=sessionStorage.getItem("c4");
+                                document.getElementById("tr4td4").innerHTML=sessionStorage.getItem("d4");
+                                document.getElementById("tr4td5").innerHTML=sessionStorage.getItem("e4");
+                                document.getElementById("tr4td6").innerHTML=sessionStorage.getItem("f4");
+                                // document.getElementById("tr4td7").innerHTML="<button>Reroute</button>";
+
+                                document.getElementById("tr5td1").innerHTML=sessionStorage.getItem("a5");
+                                document.getElementById("tr5td2").innerHTML=sessionStorage.getItem("b5");
+                                document.getElementById("tr5td3").innerHTML=sessionStorage.getItem("c5");
+                                document.getElementById("tr5td4").innerHTML=sessionStorage.getItem("d5");
+                                document.getElementById("tr5td5").innerHTML=sessionStorage.getItem("e5");
+                                document.getElementById("tr5td6").innerHTML=sessionStorage.getItem("f5");
+                                // document.getElementById("tr5td7").innerHTML="<button>Reroute</button>";
+
+                                </script>
+                                <br>
+
+                                <div>
+                                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                  <button class="btn btn-sm btn-success" id="butt2">Update</button>
+                                </div>
+                  </div>
+
+                                    <div class="container">
+                    <h3 id="serviceavailability" align="center">Service Availability</h3>
+
+
+                      <div class="container">
+
+                                  <div id="availabilityservice">
+
+                        <style>
+                          .toggle.ios, .toggle-on.ios, .toggle-off.ios { border-radius: 20px; }
+                          .toggle.ios .toggle-handle { border-radius: 20px; }
+                        </style>
+                                    <div id="erdivert">
+                                      <h4>ER Status &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="x1" type="checkbox" checked data-toggle="toggle" data-on="open" data-off="Diverted" data-onstyle="success" data-offstyle="danger" data-style="ios"></h4>
+
+                                    </div>
+                                    <script>
+                                    if (sessionStorage.getItem("erdivert1")=="open") {$('#x1').bootstrapToggle('on')} else{$('#x1').bootstrapToggle('off')};
+                                    </script>
+                                    <script>
+                                      $(function() {
+                                        $('#x1').change(function() {
+                                          if ($(this).prop('checked'))
+                                           {
+                                            sessionStorage.setItem("erdivert1","open");
+                                           
+                                          } 
+                                            else
+                                            {
+                                             sessionStorage.setItem("erdivert1","divert");
+                                             
+                                            };
+                                        })
+                                      })
+                                    </script>
+
+                                    <div id="traumadivert">
+                                      <h4>Trauma Status&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="x2" type="checkbox" checked data-toggle="toggle" data-on="open" data-off="Diverted" data-onstyle="success" data-offstyle="danger" data-style="ios"></h4>
+                                    </div>
+                                    <script>
+                                    if (sessionStorage.getItem("traumadivert1")=="open") {$('#x2').bootstrapToggle('on')} else{$('#x2').bootstrapToggle('off')};
+                                    </script>
+                                    <script>
+                                      $(function() {
+                                        $('#x2').change(function() {
+                                          if ($(this).prop('checked'))
+                                           {
+                                            sessionStorage.setItem("traumadivert1","open");
+                                          } 
+                                            else
+                                            {
+                                             sessionStorage.setItem("traumadivert1","divert");
+                                            };
+                                        })
+                                      })
+                                    </script>
+
+                                    <div id="severeburnsdivert">
+                                      <h4>SevereBurns Status<input id="x3" type="checkbox" checked data-toggle="toggle" data-on="open" data-off="Diverted" data-onstyle="success" data-offstyle="danger" data-style="ios"></h4>
+                                    </div>
+                                     <script>
+                                    if (sessionStorage.getItem("burndivert1")=="open") {$('#x3').bootstrapToggle('on')} else{$('#x3').bootstrapToggle('off')};
+                                    </script>
+                                    <script>
+                                      $(function() {
+                                        $('#x3').change(function() {
+                                          if ($(this).prop('checked'))
+                                           {
+                                            sessionStorage.setItem("burndivert1","open");
+                                          } 
+                                            else
+                                            {
+                                             sessionStorage.setItem("burndivert1","divert");
+                                            };
+                                        })
+                                      })
+                                    </script>
+
+                                    <div id="stemidivert">
+                                      <h4>STEMI Status&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="x4" type="checkbox" checked data-toggle="toggle" data-on="open" data-off="Diverted" data-onstyle="success" data-offstyle="danger" data-style="ios"></h4>
+                                    </div>
+                                    <script>
+                                    if (sessionStorage.getItem("stemidivert1")=="open") {$('#x4').bootstrapToggle('on')} else{$('#x4').bootstrapToggle('off')};
+                                    </script>
+                                    <script>
+                                      $(function() {
+                                        $('#x4').change(function() {
+                                          if ($(this).prop('checked'))
+                                           {
+                                            sessionStorage.setItem("stemidivert1","open");
+                                          } 
+                                            else
+                                            {
+                                             sessionStorage.setItem("stemidivert1","divert");
+                                            };
+                                        })
+                                      })
+                                    </script>
+
+                                    <div id="strokedivert">
+                                      <h4>Stroke Status&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="x5" type="checkbox" checked data-toggle="toggle" data-on="open" data-off="Diverted" data-onstyle="success" data-offstyle="danger" data-style="ios"></h4>
+                                    </div>
+                                    <script>
+                                    if (sessionStorage.getItem("strokedivert1")=="open") {$('#x5').bootstrapToggle('on')} else{$('#x5').bootstrapToggle('off')};
+                                    </script>
+                                    <script>
+                                      $(function() {
+                                        $('#x5').change(function() {
+                                          if ($(this).prop('checked'))
+                                           {
+                                            sessionStorage.setItem("strokedivert1","open");
+                                          } 
+                                            else
+                                            {
+                                             sessionStorage.setItem("strokedivert1","divert");
+                                            };
+                                        })
+                                      })
+                                    </script>
+
+                                  </div>
+
+
+
+                      </div>
+
+                          <script>
+                           
+
+                              if (sessionStorage.getItem("erdivert1")=="na") 
+                                {
+                                  var parent = document.getElementById("availabilityservice");
+                                  var child = document.getElementById("erdivert");
+                                  parent.removeChild(child);
+                                };
+
+                                if (sessionStorage.getItem("traumadivert1")=="na") 
+                                {
+                                  var parent = document.getElementById("availabilityservice");
+                                  var child = document.getElementById("traumadivert");
+                                  parent.removeChild(child);
+                                };
+
+                                if (sessionStorage.getItem("burndivert1")=="na") 
+                                {
+                                  var parent = document.getElementById("availabilityservice");
+                                  var child = document.getElementById("severeburnsdivert");
+                                  parent.removeChild(child);
+                                };
+
+                                if (sessionStorage.getItem("stemidivert1")=="na") 
+                                {
+                                  var parent = document.getElementById("availabilityservice");
+                                  var child = document.getElementById("stemidivert");
+                                  parent.removeChild(child);
+                                };
+
+                                if (sessionStorage.getItem("strokedivert1")=="na") 
+                                {
+                                  var parent = document.getElementById("availabilityservice");
+                                  var child = document.getElementById("strokedivert");
+                                  parent.removeChild(child);
+                                };
+                          </script>
+
+                  </div>
+
+          </div>
+
+        </div>
+
+        </div>
+
+ </div>    
+  
+       <script>
+    var ws = new SockJS('http://107.188.249.238:15674/stomp');
+        var client = Stomp.over(ws);
+      // SockJS does not support heart-beat: disable heart-beats
+      client.heartbeat.incoming = 0;
+      client.heartbeat.outgoing = 0;
+
+   
+    var myHospital = '/topic/Hospital'+sessionStorage.getItem("hospitalid");
+      var on_connect = function(x) {      
+        id = client.subscribe(myHospital, function(m) {
+            // gets the text value sent from the hospital
+            alert(m.body);
+            $('#butt2').click();
+        });
+      };
+      var on_error =  function() {
+        console.log('error');
+      };
+      client.connect('cs570', 'erProj1', on_connect, on_error, '/');
+      
+      
+    // $(document).ready(function(){
+    //   $("#as").click(
+        function senddiv1(){
+            
+        var theirAmbulance = '/topic/Ambulance'+sessionStorage.getItem("a1");
+        var text = "Divert";
+
+        if (text) {
+           alert("To ambulance"+sessionStorage.getItem("a1"));
+          client.send(theirAmbulance, {'reply-to': theirAmbulance}, text);
+          }
+          else{alert("error");}
+          // return false;
+      };
+
+        function senddiv2(){
+        
+        var theirAmbulance = '/topic/Ambulance'+sessionStorage.getItem("a2");
+        var text = "Divert";
+        if (text) {
+           alert("To ambulance"+sessionStorage.getItem("a2"));
+          client.send(theirAmbulance, {'reply-to': theirAmbulance}, text);
+          }
+          else{alert("error");}
+          // return false;
+      };
+
+      function senddiv3(){
+        
+        var theirAmbulance = '/topic/Ambulance'+sessionStorage.getItem("a3");
+        var text = "Divert";
+        if (text) {
+           alert("To ambulance"+sessionStorage.getItem("a3"));
+          client.send(theirAmbulance, {'reply-to': theirAmbulance}, text);
+          }
+          else{alert("error");}
+          // return false;
+      };
+
+      function senddiv4(){
+        
+        var theirAmbulance = '/topic/Ambulance'+sessionStorage.getItem("a4");
+        var text = "Divert";
+        if (text) {
+           alert("To ambulance"+sessionStorage.getItem("a4"));
+          client.send(theirAmbulance, {'reply-to': theirAmbulance}, text);
+          }
+          else{alert("error");}
+          // return false;
+      };
+
+      function senddiv5(){
+        
+        var theirAmbulance = '/topic/Ambulance'+sessionStorage.getItem("a5");
+        var text = "Divert";
+        if (text) {
+           alert("To ambulance"+sessionStorage.getItem("a5"));
+          client.send(theirAmbulance, {'reply-to': theirAmbulance}, text);
+          }
+          else{alert("error");}
+          // return false;
+      };
+    //   );
+    // });
+
+
+
+</script>
+
+  </body>
+
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  <style>
+    body {
+          background-image: url("http://basekit-image.s3.amazonaws.com/bkpam217675_hospitalbackground1.jpg");
+          background-size: 1375px 680px;
+         }
+  </style>
+
+<style> 
+  #stretch {
+   
+    border-image: url(http://www.goodfightmusic.com/images/flash_border.png) 30 30 stretch;
+  }
+ #hospname{
+    border: 2px solid #a1a1a1;
+    padding: 0px 0px; 
+    background: #dddddd;
+    width: 700px;
+    border-radius: 25px;
+    font-family: myFirstFont;
+  }
+  #tex2 {
+    text-shadow: 5px 5px 5px #FF0000;
+  }
+
+  @font-face {
+   font-family: myFirstFont;
+   src: url(sansation_light.woff);
+  }
+#welc{
+    text-shadow: 5px 5px 5px #00FF99;
+    font-family: myFirstFont;
+  }
+
+
+</style>
+  </head>
+
+<body>
+
+     
+<div class="container" >
+
+
+   <div  id="stretch">
+      <h1 align="center" id="hospname"></h1>
+      <h3 id="welc"></h3>
+      <h1 align="center" id="tex2">Services</h1> 
+   </div> 
+
+  <script>
+   document.getElementById("welc").innerHTML = "&nbsp;&nbsp;&nbsp;"+"Welcome "+sessionStorage.getItem("username")+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+sessionStorage.getItem("hospitaladdress");
+   document.getElementById("hospname").innerHTML =sessionStorage.getItem("hospitalname");
+  </script>
+
+         
+ 
+        <div class="pull-left">
+<img src="Medicaid-Hospital-Emergency-Room-Use.jpg" class="img-rounded" alt="Cinque Terre" width="304" height="256" style="padding-top: 25px;"><br><br><br>
+<div>
+<a type="button" href="hospital_layout.html" class="btn btn-success btn-lg">Room Availability Status</a>
+</div>
+</div>
+    <div class="pull-right">
+<img src="http://www.ipharmd.net/images/ambulance_plain_red.png" class="img-rounded" alt="Cinque Terre" width="304" 
+      <div>
+          <div>
+          <button type="button" class="btn btn-success btn-lg">Ambulance Service</button>
+          </div>
+      </div>
+  </div>
+</div>
+
+  
+  </body>
+
+</html>
